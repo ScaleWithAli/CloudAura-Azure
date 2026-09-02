@@ -32,9 +32,6 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-      
-      - name: Unlock State
-        run: terraform force-unlock -force cfd42c6a-e07c-1652-e5d0-0253b5f7834a
 
       - name: Terraform Plan
         run: terraform plan
