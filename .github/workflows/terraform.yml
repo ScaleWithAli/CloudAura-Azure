@@ -35,6 +35,10 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+        env:
+          TF_VAR_cluster_admin_object_id: ${{ secrets.TF_VAR_cluster_admin_object_id }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        env:
+          TF_VAR_cluster_admin_object_id: ${{ secrets.TF_VAR_cluster_admin_object_id }}
