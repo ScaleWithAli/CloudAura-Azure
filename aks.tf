@@ -8,7 +8,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   default_node_pool {
     name           = "system"
     node_count     = 2
-    vm_size        = "Standard_D2s_v3"
+    vm_size        = "Standard_D2s_v5"
     vnet_subnet_id = azurerm_subnet.main.id
     node_labels    = { role = "system" }
     temporary_name_for_rotation = "tmpsystem"

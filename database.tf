@@ -23,6 +23,11 @@ resource "random_password" "jwt_secret" {
   special = false
 }
 
+resource "random_password" "redis_pass" {
+  length  = 16
+  special = false
+}
+
 resource "azurerm_postgresql_flexible_server" "main" {
   name                   = "${var.cluster_name}-postgres"
   resource_group_name    = var.resource_group_name
@@ -47,16 +52,16 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_aks" {
   end_ip_address   = "10.255.255.255"
 }
 
-resource "azurerm_redis_cache" "main" {
+resource "azurerm_managed_redis" "main" {
   name                = "${var.cluster_name}-redis"
   resource_group_name = var.resource_group_name
   location            = var.azure_location
-  capacity            = 1
-  family              = "C"
-  sku_name            = "Standard"
-  redis_version       = "6"
-  minimum_tls_version = "1.2"
+  sku_name            = "Balanced_B1"
   tags                = local.common_tags
+
+  default_database {
+    clustering_policy = "OSSCluster"
+  }
 }
 
 data "azurerm_client_config" "current" {}
@@ -88,7 +93,7 @@ resource "azurerm_key_vault_secret" "service_secrets" {
       DATABASE_URL = "postgresql://admin_user:${random_password.master_db_pass.result}@${azurerm_postgresql_flexible_server.main.fqdn}:5432/${each.key}_db?sslmode=require"
     } : {},
     each.value.redis ? {
-      REDIS_URL = "rediss://:${azurerm_redis_cache.main.primary_access_key}@${azurerm_redis_cache.main.hostname}:6380"
+      REDIS_URL = "rediss://:${random_password.redis_pass.result}@${azurerm_managed_redis.main.hostname}:10000"
     } : {}
   ))
 }
