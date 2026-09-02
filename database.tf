@@ -58,7 +58,6 @@ resource "azurerm_managed_redis" "main" {
   location            = var.azure_location
   sku_name            = "Balanced_B1"
   tags                = local.common_tags
-
   default_database {
     clustering_policy = "OSSCluster"
   }
@@ -67,19 +66,19 @@ resource "azurerm_managed_redis" "main" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "main" {
-  name                = "cloudaura-kv"
-  resource_group_name = var.resource_group_name
-  location            = var.azure_location
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  sku_name            = "standard"
+  name                      = "cloudaura-kv"
+  resource_group_name       = var.resource_group_name
+  location                  = var.azure_location
+  tenant_id                 = data.azurerm_client_config.current.tenant_id
+  sku_name                  = "standard"
+  enable_rbac_authorization = true
+  tags                      = local.common_tags
+}
 
-  access_policy {
-    tenant_id          = data.azurerm_client_config.current.tenant_id
-    object_id          = data.azurerm_client_config.current.object_id
-    secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
-  }
-
-  tags = local.common_tags
+resource "azurerm_role_assignment" "kv_admin" {
+  scope                = azurerm_key_vault.main.id
+  role_definition_name = "Key Vault Secrets Officer"
+  principal_id         = data.azurerm_client_config.current.object_id
 }
 
 resource "azurerm_key_vault_secret" "service_secrets" {
