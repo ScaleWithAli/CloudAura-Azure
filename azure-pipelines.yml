@@ -1,0 +1,19 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: AzureCLI@2
+    displayName: Terraform Init & Apply
+    inputs:
+      azureSubscription: cloudaura-azure-connection
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        terraform init
+        terraform apply -auto-approve \
+          -var="cluster_admin_object_id=$(cluster_admin_object_id)"
