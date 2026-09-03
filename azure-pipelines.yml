@@ -25,5 +25,5 @@ steps:
         unzip kubelogin-linux-amd64.zip
         sudo mv bin/linux_amd64/kubelogin /usr/local/bin/
         terraform init
-        terraform apply -auto-approve \
+        terraform destroy -auto-approve \
           -var="cluster_admin_object_id=$(cluster_admin_object_id)"
