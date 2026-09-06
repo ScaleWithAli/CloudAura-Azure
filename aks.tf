@@ -40,3 +40,8 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   tags = local.common_tags
 }
+resource "azurerm_role_assignment" "aks_admin" {
+  scope                = azurerm_kubernetes_cluster.main.id
+  role_definition_name = "Azure Kubernetes Service Cluster Admin Role"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
