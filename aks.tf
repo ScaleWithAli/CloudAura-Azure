@@ -33,10 +33,6 @@ resource "azurerm_kubernetes_cluster" "main" {
     dns_service_ip      = "172.16.0.10"
   }
 
-  azure_active_directory_role_based_access_control {
-    azure_rbac_enabled     = true
-    admin_group_object_ids = [var.cluster_admin_object_id]
-  }
 
   tags = local.common_tags
 }
