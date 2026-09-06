@@ -27,8 +27,3 @@ variable "domain_name" {
   type    = string
   default = "cloudaura.online"
 }
-
-variable "cluster_admin_object_id" {
-  type        = string
-  description = "az ad signed-in-user show --query id -o tsv"
-}
