@@ -43,10 +43,11 @@ provider "azuread" {}
 provider "kubernetes" {
   host                   = azurerm_kubernetes_cluster.main.kube_config[0].host
   cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate)
+
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "kubelogin"
-    args = ["get-token", "--login", "azurecli", "--server-id", "6dae42f8-4368-4678-94ff-3960e28e3630"]
+    args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud", "--tenant-id", data.azurerm_client_config.current.tenant_id, "--client-id", var.client_id, "--client-secret", var.client_secret]
   }
 }
 
@@ -54,21 +55,11 @@ provider "helm" {
   kubernetes {
     host                   = azurerm_kubernetes_cluster.main.kube_config[0].host
     cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate)
+
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "kubelogin"
-      args = ["get-token", "--login", "azurecli", "--server-id", "6dae42f8-4368-4678-94ff-3960e28e3630"]
+      args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud", "--tenant-id", data.azurerm_client_config.current.tenant_id, "--client-id", var.client_id, "--client-secret", var.client_secret]
     }
-  }
-}
-
-provider "kubectl" {
-  host                   = azurerm_kubernetes_cluster.main.kube_config[0].host
-  cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate)
-  load_config_file       = false
-  exec {
-    api_version = "client.authentication.k8s.io/v1beta1"
-    command     = "kubelogin"
-    args = ["get-token", "--login", "azurecli", "--server-id", "6dae42f8-4368-4678-94ff-3960e28e3630"]
   }
 }
