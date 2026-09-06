@@ -24,10 +24,18 @@ steps:
         curl -LO https://github.com/Azure/kubelogin/releases/download/v0.2.19/kubelogin-linux-amd64.zip
         unzip kubelogin-linux-amd64.zip
         sudo mv bin/linux_amd64/kubelogin /usr/local/bin/
-        terraform force-unlock -force 2b91285a-e4ef-0816-44c7-733a7766bf79 || true
         terraform init
+        
+        # Purana lock clear karne ke liye init ke baad force-unlock run karein
+        terraform force-unlock -force 2b91285a-e4ef-0816-44c7-733a7766bf79 || true
+        
         terraform apply -auto-approve \
-          -var="cluster_admin_object_id=$(cluster_admin_object_id)" \
-          -var="client_id=$(servicePrincipalId)" \
-          -var="client_secret=$(servicePrincipalKey)" \
-          -var="tenant_id=$(tenantId)"
+          -var="cluster_admin_object_id=$CLUSTER_ADMIN_OBJECT_ID" \
+          -var="client_id=$SERVICE_PRINCIPAL_ID" \
+          -var="client_secret=$SERVICE_PRINCIPAL_KEY" \
+          -var="tenant_id=$TENANT_ID"
+    env:
+      SERVICE_PRINCIPAL_ID: $(servicePrincipalId)
+      SERVICE_PRINCIPAL_KEY: $(servicePrincipalKey)
+      TENANT_ID: $(tenantId)
+      CLUSTER_ADMIN_OBJECT_ID: $(cluster_admin_object_id)
