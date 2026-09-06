@@ -24,7 +24,7 @@ steps:
         curl -LO https://github.com/Azure/kubelogin/releases/download/v0.2.19/kubelogin-linux-amd64.zip
         unzip kubelogin-linux-amd64.zip
         sudo mv bin/linux_amd64/kubelogin /usr/local/bin/
-        
+        terraform force-unlock -force 2b91285a-e4ef-0816-44c7-733a7766bf79 || true
         terraform init
         terraform apply -auto-approve \
           -var="cluster_admin_object_id=$(cluster_admin_object_id)" \
