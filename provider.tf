@@ -45,7 +45,7 @@ provider "kubernetes" {
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "kubelogin"
-    args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud"]
+    args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud", "--tenant-id", var.tenant_id, "--client-id", var.client_id, "--client-secret", var.client_secret]
   }
 }
 
@@ -57,7 +57,7 @@ provider "helm" {
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "kubelogin"
-      args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud"]
+      args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud", "--tenant-id", var.tenant_id, "--client-id", var.client_id, "--client-secret", var.client_secret]
     }
   }
 }
