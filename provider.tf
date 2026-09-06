@@ -43,11 +43,11 @@ provider "azuread" {}
 provider "kubernetes" {
   host                   = azurerm_kubernetes_cluster.main.kube_config[0].host
   cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate)
-
+  
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "kubelogin"
-    args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud", "--tenant-id", data.azurerm_client_config.current.tenant_id, "--client-id", var.client_id, "--client-secret", var.client_secret]
+    args        = ["get-token", "--login", "azurecli"]
   }
 }
 
@@ -55,11 +55,11 @@ provider "helm" {
   kubernetes {
     host                   = azurerm_kubernetes_cluster.main.kube_config[0].host
     cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.main.kube_config[0].cluster_ca_certificate)
-
+    
     exec {
       api_version = "client.authentication.k8s.io/v1beta1"
       command     = "kubelogin"
-      args        = ["get-token", "--login", "sp", "--environment", "AzurePublicCloud", "--tenant-id", data.azurerm_client_config.current.tenant_id, "--client-id", var.client_id, "--client-secret", var.client_secret]
+      args        = ["get-token", "--login", "azurecli"]
     }
   }
 }
