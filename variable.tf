@@ -32,14 +32,3 @@ variable "cluster_admin_object_id" {
   type        = string
   description = "az ad signed-in-user show --query id -o tsv"
 }
-variable "client_id" {
-  type = string
-}
-
-variable "client_secret" {
-  type = string
-}
-
-variable "tenant_id" {
-  type = string
-}
