@@ -25,8 +25,6 @@ steps:
         unzip kubelogin-linux-amd64.zip
         sudo mv bin/linux_amd64/kubelogin /usr/local/bin/
         terraform init
-        
-        # Sahi flag -force hai, -auto-approve nahi
-        terraform force-unlock -force 04e3ac2f-95ee-915b-7d5b-3a28558751b0
-        
-        terraform apply  -auto-approve -lock=false
+        terraform apply -auto-approve || true
+        sleep 60
+        terraform apply -auto-approve
