@@ -26,7 +26,13 @@ resource "helm_release" "external_secrets" {
   chart            = "external-secrets"
   namespace        = "external-secrets"
   create_namespace = true
-  depends_on       = [azurerm_kubernetes_cluster.main]
+  
+  set {
+    name  = "installCRDs"
+    value = "true"
+  }
+
+  depends_on = [azurerm_kubernetes_cluster.main]
 }
 
 resource "kubectl_manifest" "cluster_secret_store" {
