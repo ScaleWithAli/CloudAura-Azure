@@ -71,7 +71,7 @@ resource "azurerm_key_vault" "main" {
   location                  = var.azure_location
   tenant_id                 = data.azurerm_client_config.current.tenant_id
   sku_name                  = "standard"
-  enable_rbac_authorization = true
+  rbac_authorization_enable = true
   tags                      = local.common_tags
 }
 
