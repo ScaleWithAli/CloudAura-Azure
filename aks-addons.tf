@@ -34,23 +34,3 @@ resource "helm_release" "external_secrets" {
 
   depends_on = [azurerm_kubernetes_cluster.main]
 }
-
-resource "kubectl_manifest" "cluster_secret_store" {
-  yaml_body = <<-YAML
-    apiVersion: external-secrets.io/v1beta1
-    kind: ClusterSecretStore
-    metadata:
-      name: azure-keyvault-store
-    spec:
-      provider:
-        azurekv:
-          tenantId: "${data.azurerm_client_config.current.tenant_id}"
-          vaultUrl: "${azurerm_key_vault.main.vault_uri}"
-          authType: WorkloadIdentity
-          serviceAccountRef:
-            name: external-secrets-sa
-            namespace: external-secrets
-  YAML
-
-  depends_on = [helm_release.external_secrets, azurerm_key_vault.main]
-}
