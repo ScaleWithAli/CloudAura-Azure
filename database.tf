@@ -92,12 +92,11 @@ resource "azurerm_key_vault_secret" "service_secrets" {
   ))
 }
 data "azuread_service_principal" "pipeline" {
-  display_name = "cloudaura-github-actions"
+  display_name = "muhammadalihassan792-CloudAura-Azure-71993782-0fba-4822-bbbc-f351142f8044"
 }
 
 resource "azurerm_role_assignment" "kv_pipeline" {
-  scope                            = azurerm_key_vault.main.id
-  role_definition_name             = "Key Vault Secrets Officer"
-  principal_id                     = data.azuread_service_principal.pipeline.object_id
-  skip_service_principal_aad_check = true
+  scope                = azurerm_key_vault.main.id
+  role_definition_name = "Key Vault Secrets Officer"
+  principal_id         = data.azuread_service_principal.pipeline.object_id
 }
