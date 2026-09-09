@@ -80,6 +80,7 @@ resource "azurerm_key_vault_secret" "service_secrets" {
   for_each     = local.services
   name         = "${each.key}-secrets"
   key_vault_id = azurerm_key_vault.main.id
+  depends_on   = [azurerm_role_assignment.kv_pipeline]
 
   value = jsonencode(merge(
     each.value.needs_jwt ? { JWT_SECRET = random_password.jwt_secret.result } : {},
