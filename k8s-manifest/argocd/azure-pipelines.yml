@@ -13,7 +13,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Get AKS Credentials"
   inputs:
-    azureSubscription: "cloudaura-service-connection"
+    azureSubscription: "cloudaura-azure-connection"
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
