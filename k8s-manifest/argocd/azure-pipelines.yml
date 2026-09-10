@@ -19,7 +19,7 @@ steps:
     inlineScript: |
       az aks get-credentials \
         --resource-group cloudaura-rg \
-        --name cloudaura-aks
+        --name cloudaura-aks-cluster
 
 - script: |
     kubectl apply -f k8s-manifest/argocd/applications/
