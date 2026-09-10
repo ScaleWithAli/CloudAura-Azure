@@ -1,0 +1,87 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: microservices-updater
+  namespace: argocd
+spec:
+  writeBackConfig:
+    method: "git"
+    gitConfig:
+      repository: "https://github.com/muhammadali792/CloudAura-Azure.git"
+      branch: "main"
+  applicationRefs:
+  - namePattern: "auth-service"
+    writeBackConfig:
+      method: "git"
+      gitConfig:
+        writeBackTarget: "helmvalues:../services/auth-values.yaml"
+    images:
+    - alias: "app"
+      imageName: "cloudaura.azurecr.io/auth-repo"
+      commonUpdateSettings:
+        updateStrategy: "semver"
+        allowTags: "regexp:^v\\d+\\.\\d+\\.\\d+$"
+      manifestTargets:
+        helm:
+          name: image.repository
+          tag: image.tag
+  - namePattern: "order-service"
+    writeBackConfig:
+      method: "git"
+      gitConfig:
+        writeBackTarget: "helmvalues:../services/order-values.yaml"
+    images:
+    - alias: "app"
+      imageName: "cloudaura.azurecr.io/order-repo"
+      commonUpdateSettings:
+        updateStrategy: "semver"
+        allowTags: "regexp:^v\\d+\\.\\d+\\.\\d+$"
+      manifestTargets:
+        helm:
+          name: image.repository
+          tag: image.tag
+  - namePattern: "product-service"
+    writeBackConfig:
+      method: "git"
+      gitConfig:
+        writeBackTarget: "helmvalues:../services/product-value.yml"
+    images:
+    - alias: "app"
+      imageName: "cloudaura.azurecr.io/product-repo"
+      commonUpdateSettings:
+        updateStrategy: "semver"
+        allowTags: "regexp:^v\\d+\\.\\d+\\.\\d+$"
+      manifestTargets:
+        helm:
+          name: image.repository
+          tag: image.tag
+  - namePattern: "frontend-service"
+    writeBackConfig:
+      method: "git"
+      gitConfig:
+        writeBackTarget: "helmvalues:../services/frontend-value.yml"
+    images:
+    - alias: "app"
+      imageName: "cloudaura.azurecr.io/frontend-repo"
+      commonUpdateSettings:
+        updateStrategy: "semver"
+        allowTags: "regexp:^v\\d+\\.\\d+\\.\\d+$"
+      manifestTargets:
+        helm:
+          name: image.repository
+          tag: image.tag
+  - namePattern: "notif-service"
+    writeBackConfig:
+      method: "git"
+      gitConfig:
+        writeBackTarget: "helmvalues:../services/notif-values.yaml"
+    images:
+    - alias: "app"
+      imageName: "cloudaura.azurecr.io/notif-repo"
+      commonUpdateSettings:
+        updateStrategy: "semver"
+        allowTags: "regexp:^v\\d+\\.\\d+\\.\\d+$"
+      manifestTargets:
+        helm:
+          name: image.repository
+          tag: image.tag

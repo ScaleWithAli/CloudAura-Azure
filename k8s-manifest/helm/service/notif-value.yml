@@ -1,0 +1,41 @@
+replicaCount: 1
+image:
+  registry: "cloudaura.azurecr.io"
+  name: notif-repo
+  tag: v1.0.39
+  repository: cloudaura.azurecr.io/notif-repo
+service:
+  port: 3000
+migration:
+  enabled: false
+ingress:
+  enabled: false
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  cpuUtilization: 70
+networkPolicy:
+  enabled: true
+  allowFrom:
+  - order-service
+  allowTo: []
+rollout:
+  enabled: false
+  canary:
+    autoRollback: true
+    steps:
+    - setWeight: 10
+    - pause:
+        duration: 60s
+    - setWeight: 50
+    - pause:
+        duration: 60s
+    - setWeight: 100
+env:
+  jwt:
+    enabled: false
+  db:
+    enabled: false
+  redis:
+    enabled: true

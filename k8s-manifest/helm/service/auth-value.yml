@@ -1,0 +1,55 @@
+replicaCount: 2
+image:
+  registry: "cloudaura.azurecr.io"
+  name: auth-repo
+  tag: "v1.0.68"
+  repository: cloudaura.azurecr.io/auth-repo
+service:
+  port: 8000
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+migration:
+  enabled: false
+ingress:
+  enabled: true
+  host: auth.cloudaura.online
+  port: 8000
+  tls:
+    enabled: true
+  mtls:
+    enabled: false
+    secretName: auth-mtls-secret
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  cpuUtilization: 70
+networkPolicy:
+  enabled: true
+  allowFrom:
+  - order-service
+  allowTo: []
+rollout:
+  enabled: false
+  canary:
+    autoRollback: false
+    steps:
+    - setWeight: 10
+    - pause:
+        duration: 60s
+    - setWeight: 50
+    - pause:
+        duration: 60s
+    - setWeight: 100
+env:
+  jwt:
+    enabled: true
+  db:
+    enabled: true
+  redis:
+    enabled: false

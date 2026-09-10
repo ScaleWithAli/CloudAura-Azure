@@ -1,0 +1,49 @@
+replicaCount: 2
+image:
+  name: product-repo
+  registry: "cloudaura.azurecr.io"
+  tag: v1.0.51
+  repository: cloudaura.azurecr.io/product-repo
+service:
+  port: 8001
+migration:
+  enabled: false
+ingress:
+  enabled: true
+  host: product.cloudaura.online
+  port: 8001
+  tls:
+    enabled: true
+  mtls:
+    enabled: false
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 3
+  cpuUtilization: 70
+networkPolicy:
+  enabled: true
+  allowFrom:
+  - order-service
+  allowTo: []
+rollout:
+  enabled: false
+  canary:
+    autoRollback: false
+    steps:
+    - setWeight: 10
+    - pause:
+        duration: 60s
+    - setWeight: 50
+    - pause:
+        duration: 60s
+    - setWeight: 100
+env:
+  jwt:
+    enabled: false
+  db:
+    enabled: true
+  redis:
+    enabled: true
+  extra:
+    AUTH_SERVICE_URL: "http://auth-service.auth.svc.cluster.local:8000"

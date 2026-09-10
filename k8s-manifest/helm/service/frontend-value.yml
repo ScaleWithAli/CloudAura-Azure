@@ -1,0 +1,45 @@
+replicaCount: 1
+image:
+  name: frontend-repo
+  registry: "cloudaura.azurecr.io"
+  tag: v1.0.69
+  repository: cloudaura.azurecr.io/frontend-repo
+service:
+  port: 80
+migration:
+  enabled: false
+ingress:
+  enabled: true
+  host: cloudaura.online
+  port: 80
+  tls:
+    enabled: true
+  mtls:
+    enabled: false
+    secretName: ""
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  cpuUtilization: 70
+networkPolicy:
+  enabled: false
+  allowFrom: []
+  allowTo: []
+rollout:
+  enabled: false
+  canary:
+    autoRollback: false
+    steps: []
+env:
+  jwt:
+    enabled: false
+  db:
+    enabled: false
+  redis:
+    enabled: false
+  extra:
+    VITE_AUTH_URL: "https://auth.cloudaura.online"
+    VITE_PRODUCT_URL: "https://product.cloudaura.online"
+    VITE_ORDER_URL: "https://order.cloudaura.online"
+    VITE_NOTIF_URL: "https://notif.cloudaura.online"

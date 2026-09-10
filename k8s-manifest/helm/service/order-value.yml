@@ -1,0 +1,48 @@
+replicaCount: 2
+image:
+  name: order-repo
+  registry: "cloudaura.azurecr.io"
+  tag: v1.0.71
+  repository: cloudaura.azurecr.io/order-repo
+service:
+  port: 8002
+migration:
+  enabled: false
+ingress:
+  enabled: true
+  host: order.cloudaura.online
+  port: 8002
+  tls:
+    enabled: true
+  mtls:
+    enabled: false
+    secretName: order-mtls-secret
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  cpuUtilization: 65
+networkPolicy:
+  enabled: true
+  allowFrom:
+  - product-service
+  allowTo: []
+rollout:
+  enabled: false
+  canary:
+    autoRollback: false
+    steps:
+    - setWeight: 10
+    - pause:
+        duration: 60s
+    - setWeight: 100
+env:
+  jwt:
+    enabled: true
+  db:
+    enabled: true
+  redis:
+    enabled: true
+  extra:
+    AUTH_SERVICE_URL: "http://auth-service.auth.svc.cluster.local:8000"
+    PRODUCT_SERVICE_URL: "http://product-service.product.svc.cluster.local:8001"

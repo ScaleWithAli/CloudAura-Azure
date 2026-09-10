@@ -1,0 +1,27 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - k8s-manifest/**
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureCLI@2
+  displayName: "Get AKS Credentials"
+  inputs:
+    azureSubscription: "cloudaura-service-connection"
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az aks get-credentials \
+        --resource-group cloudaura-rg \
+        --name cloudaura-aks
+
+- script: |
+    kubectl apply -f k8s-manifest/argocd/applications/
+    kubectl apply -f k8s-manifest/cluster-config/
+  displayName: "Apply ArgoCD Manifests"
