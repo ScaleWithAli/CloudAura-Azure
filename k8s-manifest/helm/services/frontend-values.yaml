@@ -43,3 +43,9 @@ env:
     VITE_PRODUCT_URL: "https://product.cloudaura.online"
     VITE_ORDER_URL: "https://order.cloudaura.online"
     VITE_NOTIF_URL: "https://notif.cloudaura.online"
+deployment:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
