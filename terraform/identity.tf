@@ -18,3 +18,9 @@ resource "azurerm_federated_identity_credential" "image_updater" {
   user_assigned_identity_id = azurerm_user_assigned_identity.image_updater.id
   subject                   = "system:serviceaccount:argocd:argocd-image-updater-sa"
 }
+
+resource "azurerm_role_assignment" "aks_acr_pull" {
+  principal_id         = azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.main.id
+}
