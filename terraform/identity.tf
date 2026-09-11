@@ -16,6 +16,8 @@ resource "azurerm_federated_identity_credential" "image_updater" {
   audience                  = ["api://AzureADTokenExchange"]
   issuer                    = azurerm_kubernetes_cluster.main.oidc_issuer_url
   user_assigned_identity_id = azurerm_user_assigned_identity.image_updater.id
+  subject                   = "system:serviceaccount:argocd:argocd-image-updater-sa"
+}
 
 resource "kubernetes_service_account" "external_secrets_sa" {
   metadata {
