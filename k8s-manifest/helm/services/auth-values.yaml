@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   registry: "cloudaura.azurecr.io"
-  name: auth-repo
+  name: auth-service
   tag: "v1.0.75"
   repository: cloudaura.azurecr.io/auth-repo
 service:

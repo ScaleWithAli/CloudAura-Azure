@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   registry: "cloudaura.azurecr.io"
-  name: notif-repo
+  name: notif-service
   tag: v1.0.75
   repository: cloudaura.azurecr.io/notif-repo
 service:

@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  name: frontend-repo
+  name: frontend
   registry: "cloudaura.azurecr.io"
   tag: v1.0.75
   repository: cloudaura.azurecr.io/frontend-repo

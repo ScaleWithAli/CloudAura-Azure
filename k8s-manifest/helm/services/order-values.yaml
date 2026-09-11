@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  name: order-repo
+  name: order-service
   registry: "cloudaura.azurecr.io"
   tag: v1.0.75
   repository: cloudaura.azurecr.io/order-repo
