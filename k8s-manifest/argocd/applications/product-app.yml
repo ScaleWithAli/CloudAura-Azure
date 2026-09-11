@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/muhammadali792/CloudAura-Azure
+    repoURL: https://github.com/ScaleWithAli/CloudAura-Azure
     targetRevision: main
     path: k8s-manifest/helm/microservice
     helm:

@@ -7,7 +7,7 @@ spec:
   writeBackConfig:
     method: "git"
     gitConfig:
-      repository: "https://github.com/muhammadali792/CloudAura-Azure.git"
+      repository: "https://github.com/ScaleWithAli/CloudAura-Azure.git"
       branch: "main"
   applicationRefs:
   - namePattern: "auth-service"
