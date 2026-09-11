@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   registry: "cloudaura.azurecr.io"
   name: notif-repo
-  tag: v1.0.39
+  tag: v1.0.75
   repository: cloudaura.azurecr.io/notif-repo
 service:
   port: 3000
