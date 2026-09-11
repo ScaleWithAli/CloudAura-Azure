@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   name: product-repo
   registry: "cloudaura.azurecr.io"
-  tag: v1.0.51
+  tag: v1.0.75
   repository: cloudaura.azurecr.io/product-repo
 service:
   port: 8001
