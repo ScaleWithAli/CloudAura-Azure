@@ -3,7 +3,7 @@ image:
   name: frontend
   registry: "cloudaura.azurecr.io"
   tag: v1.0.75
-  repository: cloudaura.azurecr.io/frontend-repo
+  repository: cloudaura.azurecr.io/frontend
 service:
   port: 80
 migration:

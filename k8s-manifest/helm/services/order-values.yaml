@@ -3,7 +3,7 @@ image:
   name: order-service
   registry: "cloudaura.azurecr.io"
   tag: v1.0.75
-  repository: cloudaura.azurecr.io/order-repo
+  repository: cloudaura.azurecr.io/order-service
 service:
   port: 8002
 migration:

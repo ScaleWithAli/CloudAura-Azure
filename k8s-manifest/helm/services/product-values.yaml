@@ -3,7 +3,7 @@ image:
   name: product-service
   registry: "cloudaura.azurecr.io"
   tag: v1.0.75
-  repository: cloudaura.azurecr.io/product-repo
+  repository: cloudaura.azurecr.io/product-service
 service:
   port: 8001
 migration:

@@ -3,7 +3,7 @@ image:
   registry: "cloudaura.azurecr.io"
   name: notif-service
   tag: v1.0.75
-  repository: cloudaura.azurecr.io/notif-repo
+  repository: cloudaura.azurecr.io/notif-service
 service:
   port: 3000
 migration:
