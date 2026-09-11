@@ -29,5 +29,5 @@ steps:
         sudo mv bin/linux_amd64/kubelogin /usr/local/bin/
         cd terraform
         terraform init
-        terraform apply -auto-approve
+        terraform destroy -auto-approve
       
