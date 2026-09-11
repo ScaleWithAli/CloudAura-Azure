@@ -11,7 +11,7 @@ pool:
 
 steps:
 - task: AzureCLI@2
-  displayName: "Get AKS Credentials"
+  displayName: "Get AKS Credentials & Apply ArgoCD Manifests"
   inputs:
     azureSubscription: "cloudaura-azure-connection"
     scriptType: bash
@@ -19,9 +19,6 @@ steps:
     inlineScript: |
       az aks get-credentials \
         --resource-group cloudaura-rg \
-        --name cloudaura-aks-cluster
-
-- script: |
-    kubectl apply -f k8s-manifest/argocd/applications/
-    kubectl apply -f k8s-manifest/cluster-config/
-  displayName: "Apply ArgoCD Manifests"
+        --name cloudaura-aks-cluster --overwrite-existing
+      kubectl apply -f k8s-manifest/argocd/applications/
+      kubectl apply -f k8s-manifest/cluster-config/
