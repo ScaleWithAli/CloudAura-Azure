@@ -11,7 +11,7 @@ spec:
     path: k8s-manifest/helm/microservice
     helm:
       valueFiles:
-      - ../services/product-values.yaml
+      - ../services/notif-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: product
