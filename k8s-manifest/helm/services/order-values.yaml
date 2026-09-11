@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   name: order-repo
   registry: "cloudaura.azurecr.io"
-  tag: v1.0.71
+  tag: v1.0.75
   repository: cloudaura.azurecr.io/order-repo
 service:
   port: 8002
