@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: product-service
+  name: order-service
   namespace: argocd
 spec:
   project: default
@@ -14,10 +14,10 @@ spec:
       - ../services/order-values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: product
+    namespace: order
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true 
+    - CreateNamespace=true
