@@ -16,3 +16,13 @@ resource "azurerm_federated_identity_credential" "image_updater" {
   audience                  = ["api://AzureADTokenExchange"]
   issuer                    = azurerm_kubernetes_cluster.main.oidc_issuer_url
   user_assigned_identity_id = azurerm_user_assigned_identity.image_updater.id
+
+resource "kubernetes_service_account" "external_secrets_sa" {
+  metadata {
+    name      = "external-secrets-sa"
+    namespace = "external-secrets"
+    annotations = {
+      "azure.workload.identity/client-id" = azurerm_user_assigned_identity.external_secrets.client_id
+    }
+  }
+}
