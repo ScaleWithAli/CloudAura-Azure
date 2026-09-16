@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   registry: "cloudaura.azurecr.io"
   name: auth-service
-  tag: "v1.0.75"
+  tag: "v1.0.110"
   repository: cloudaura.azurecr.io/auth-service
 service:
   port: 8000

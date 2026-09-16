@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   name: frontend
   registry: "cloudaura.azurecr.io"
-  tag: v1.0.75
+  tag: v1.0.110
   repository: cloudaura.azurecr.io/frontend
 service:
   port: 80
