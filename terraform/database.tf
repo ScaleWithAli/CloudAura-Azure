@@ -101,3 +101,10 @@ resource "azurerm_role_assignment" "kv_pipeline" {
   role_definition_name = "Key Vault Secrets Officer"
   principal_id         = data.azuread_service_principal.pipeline.object_id
 }
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_nat" {
+  name             = "allow-nat"
+  server_id        = azurerm_postgresql_flexible_server.main.id
+  start_ip_address = azurerm_public_ip.nat.ip_address
+  end_ip_address   = azurerm_public_ip.nat.ip_address
+}
