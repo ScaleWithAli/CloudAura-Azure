@@ -13,6 +13,31 @@ resource "azurerm_subnet" "main" {
   address_prefixes     = ["10.1.0.0/16"]
 }
 
+resource "azurerm_subnet" "db" {
+  name                 = "db-subnet"
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = ["10.2.0.0/16"]
+  delegation {
+    name = "postgres"
+    service_delegation {
+      name = "Microsoft.DBforPostgreSQL/flexibleServers"
+    }
+  }
+}
+
+resource "azurerm_private_dns_zone" "postgres" {
+  name                = "cloudaura.postgres.database.azure.com"
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "postgres" {
+  name                  = "postgres-dns-link"
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.postgres.name
+  virtual_network_id    = azurerm_virtual_network.main.id
+}
+
 resource "azurerm_public_ip" "nat" {
   name                = "${var.cluster_name}-nat-ip"
   location            = var.azure_location
