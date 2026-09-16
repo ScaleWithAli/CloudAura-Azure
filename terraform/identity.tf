@@ -40,6 +40,12 @@ resource "azurerm_role_assignment" "external_secrets_keyvault" {
   scope                = azurerm_key_vault.main.id
 }
 
+resource "kubernetes_namespace" "external_secrets" {
+  metadata {
+    name = "external-secrets"
+  }
+}
+
 resource "kubernetes_service_account" "external_secrets_sa" {
   metadata {
     name      = "external-secrets-sa"
@@ -48,4 +54,5 @@ resource "kubernetes_service_account" "external_secrets_sa" {
       "azure.workload.identity/client-id" = azurerm_user_assigned_identity.external_secrets.client_id
     }
   }
+  depends_on = [kubernetes_namespace.external_secrets]
 }
