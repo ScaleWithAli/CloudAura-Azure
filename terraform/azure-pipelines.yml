@@ -30,5 +30,5 @@ steps:
         az postgres flexible-server delete --name cloudaura-aks-cluster-postgres --resource-group cloudaura-rg --yes || true
         cd terraform
         terraform init
-        terraform destroy -auto-approve
+        terraform apply -auto-approve
       
